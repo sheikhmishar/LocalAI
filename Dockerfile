@@ -328,11 +328,7 @@ RUN make prepare
 ## If it's CUDA or hipblas, we want to skip some of the llama-compat backends to save space
 ## We only leave the most CPU-optimized variant and the fallback for the cublas/hipblas build
 ## (both will use CUDA or hipblas for the actual computation)
-RUN if [ "${BUILD_TYPE}" = "cublas" ] || [ "${BUILD_TYPE}" = "hipblas" ]; then \
-        SKIP_GRPC_BACKEND="backend-assets/grpc/llama-cpp-avx backend-assets/grpc/llama-cpp-avx2" make build; \
-    else \
-        make build; \
-    fi
+RUN make build
 
 RUN if [ ! -d "/build/sources/go-piper/piper-phonemize/pi/lib/" ]; then \
         mkdir -p /build/sources/go-piper/piper-phonemize/pi/lib/ \
